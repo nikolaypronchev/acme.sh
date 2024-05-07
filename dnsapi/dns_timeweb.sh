@@ -298,7 +298,7 @@ _timeweb_is_main_domain() {
   TW_Main_Domain=$TW_Domain_Fqdn
   TW_Subdomains=$(
     echo "$Acme_Fqdn" |
-      sed "s/.\?.\{${#TW_Domain_Fqdn}\}$//"
+      sed "s/\.*.\{${#TW_Domain_Fqdn}\}$//"
   )
 
   _debug "Matched domain. ACME DNS-01 challenge FQDN  split as [$TW_Subdomains].[$TW_Main_Domain]."
