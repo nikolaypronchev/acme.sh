@@ -137,10 +137,7 @@ _timeweb_split_acme_fqdn() {
       [ -n "$TW_Domain" ] && {
         _timeweb_is_main_domain "$TW_Domain" && return 0
 
-        TW_Domains=$(
-          echo "$TW_Domains" |
-            sed "s/{$TW_Domain}//"
-        )
+        TW_Domains="${TW_Domains//$TW_Domain/}"
         continue
       }
     do :; done
