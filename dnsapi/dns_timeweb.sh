@@ -111,6 +111,17 @@ _timeweb_split_acme_fqdn() {
   TW_Page_Limit=100
   TW_Page_Offset=0
 
+  _debug "TW_Page_Limit: $TW_Page_Limit"
+  _debug "TW_Page_Offset: $TW_Page_Offset"
+
+  if [ -z "$TW_Domains_Returned" ]; then
+    _debug "[ -z TW_Domains_Returned ] => true";
+  fi
+
+  if [ "$TW_Domains_Returned" -ge "$TW_Page_Limit" ]; then
+    _debug "[ TW_Domains_Returned -ge TW_Page_Limit ] => true";
+  fi
+
   while [ -z "$TW_Domains_Returned" ] || [ "$TW_Domains_Returned" -ge "$TW_Page_Limit" ]; do
 
     _timeweb_list_domains "$TW_Page_Limit" "$TW_Page_Offset" || return 1
