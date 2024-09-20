@@ -116,6 +116,9 @@ _timeweb_split_acme_fqdn() {
 
   if [ -z "$TW_Domains_Returned" ]; then
     _debug "[ -z TW_Domains_Returned ] => true";
+  else
+    _debug "[ -z TW_Domains_Returned ] => false";
+    _debug "TW_Domains_Returned => $TW_Domains_Returned";
   fi
 
   if [ "$TW_Domains_Returned" -ge "$TW_Page_Limit" ]; then
