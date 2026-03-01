@@ -9,7 +9,7 @@ Issues: github.com/acmesh-official/acme.sh/issues/5140
 Author: Nikolay Pronchev <@nikolaypronchev>
 '
 
-TW_Api="https://api.timeweb.cloud/api/v1"
+TW_Api="https://api.timeweb.cloud/api"
 
 ################  Public functions ################
 
@@ -199,7 +199,7 @@ _timeweb_list_domains() {
 
   export _H1="Authorization: Bearer $TW_Token"
 
-  if ! TW_Domains=$(_get "$TW_Api/domains?limit=$1&offset=$2"); then
+  if ! TW_Domains=$(_get "$TW_Api/v1/domains?limit=$1&offset=$2"); then
     _err "The request to the Timeweb Cloud API failed."
     return 1
   fi
@@ -239,7 +239,7 @@ _timeweb_list_dns_records() {
 
   export _H1="Authorization: Bearer $TW_Token"
 
-  if ! TW_Dns_Records=$(_get "$TW_Api/domains/$TW_Main_Domain/dns-records?limit=$1&offset=$2"); then
+  if ! TW_Dns_Records=$(_get "$TW_Api/v1/domains/$TW_Main_Domain/dns-records?limit=$1&offset=$2"); then
     _err "The request to the Timeweb Cloud API failed."
     return 1
   fi
@@ -349,11 +349,10 @@ _timeweb_dns_txt_add() {
 
   if ! TW_Response=$(
     _post "{
-      \"subdomain\":\"$TW_Subdomains\",
       \"type\":\"TXT\",
       \"value\":\"$Acme_Txt\"
     }" \
-      "$TW_Api/domains/$TW_Main_Domain/dns-records"
+      "$TW_Api/v2/domains/$TW_Subdomains.$TW_Main_Domain/dns-records"
   ); then
     _err "The request to the Timeweb Cloud API failed."
     return 1
@@ -386,7 +385,7 @@ _timeweb_dns_txt_remove() {
   if ! TW_Response=$(
     _post \
       "" \
-      "$TW_Api/domains/$TW_Main_Domain/dns-records/$TW_Dns_Txt_Id" \
+      "$TW_Api/v2/domains/$TW_Subdomains.$TW_Main_Domain/dns-records/$TW_Dns_Txt_Id" \
       "" \
       "DELETE"
   ); then
