@@ -11,7 +11,7 @@ Author: Nikolay Pronchev <@nikolaypronchev>
 
 TW_Api="https://api.timeweb.cloud/api/v1"
 
-################  Public functions ################
+################  Public functions #################
 
 # Adds an ACME DNS-01 challenge DNS TXT record via the Timeweb Cloud API.
 #
