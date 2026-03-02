@@ -347,12 +347,18 @@ _timeweb_dns_txt_add() {
   export _H1="Authorization: Bearer $TW_Token"
   export _H2="Content-Type: application/json"
 
+  if [ -n "$TW_Subdomains" ]; then
+    _domain="$TW_Subdomains.$TW_Main_Domain"
+  else
+    _domain="$TW_Main_Domain"
+  fi
+
   if ! TW_Response=$(
     _post "{
       \"type\":\"TXT\",
       \"value\":\"$Acme_Txt\"
     }" \
-      "$TW_Api/v2/domains/$TW_Subdomains.$TW_Main_Domain/dns-records"
+      "$TW_Api/v2/domains/$_domain/dns-records"
   ); then
     _err "The request to the Timeweb Cloud API failed."
     return 1
@@ -382,10 +388,16 @@ _timeweb_dns_txt_remove() {
 
   export _H1="Authorization: Bearer $TW_Token"
 
+  if [ -n "$TW_Subdomains" ]; then
+    _domain="$TW_Subdomains.$TW_Main_Domain"
+  else
+    _domain="$TW_Main_Domain"
+  fi
+
   if ! TW_Response=$(
     _post \
       "" \
-      "$TW_Api/v2/domains/$TW_Subdomains.$TW_Main_Domain/dns-records/$TW_Dns_Txt_Id" \
+      "$TW_Api/v2/domains/$_domain/dns-records/$TW_Dns_Txt_Id" \
       "" \
       "DELETE"
   ); then
